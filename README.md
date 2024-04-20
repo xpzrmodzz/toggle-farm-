@@ -1,16 +1,17 @@
-local teleportEnabled = false -- Initialisation de l'état du basculement
+local teleportEnabled = false
 
 local function teleportToDummy()
-    local dummy2 = workspace.MAP:FindFirstChild("5k_dummies").Dummy2
-    if dummy2 then
-        game.Players.LocalPlayer.Character:SetPrimaryPartCFrame(dummy2.HumanoidRootPart.CFrame)
+    local dummy2 = workspace.MAP:FindFirstChild("5k_dummies")
+    if dummy2 and dummy2:FindFirstChild("Dummy2") then
+        game.Players.LocalPlayer.Character:SetPrimaryPartCFrame(dummy2.Dummy2.HumanoidRootPart.CFrame)
+        print("Téléportation réussie.")
     else
         print("Le Dummy2 n'existe pas.")
     end
 end
 
 local function toggleTeleport()
-    teleportEnabled = not teleportEnabled -- Inversion de l'état du basculement
+    teleportEnabled = not teleportEnabled
     if teleportEnabled then
         print("Téléportation activée.")
     else
@@ -21,14 +22,15 @@ end
 local function sendToServer()
     while true do
         wait()
-        if teleportEnabled then -- Exécuter seulement si la téléportation est activée
-            local dummy2 = workspace.MAP:FindFirstChild("5k_dummies").Dummy2
-            if dummy2 then
+        if teleportEnabled then
+            local dummy2 = workspace.MAP:FindFirstChild("5k_dummies")
+            if dummy2 and dummy2:FindFirstChild("Dummy2") then
                 local args = {
-                    [1] = dummy2.Humanoid,
+                    [1] = dummy2.Dummy2.Humanoid,
                     [2] = 1
                 }
                 game:GetService("ReplicatedStorage").jdskhfsIIIllliiIIIdchgdIiIIIlIlIli:FireServer(unpack(args))
+                print("Données envoyées au serveur.")
             else
                 print("Le Dummy2 n'existe pas.")
             end
@@ -36,8 +38,5 @@ local function sendToServer()
     end
 end
 
--- Commande pour basculer l'état de la téléportation
 toggleTeleport()
-
--- Exécuter la fonction d'envoi au serveur dans un thread séparé
 coroutine.wrap(sendToServer)()
