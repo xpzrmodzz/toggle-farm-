@@ -19,17 +19,19 @@ local function toggleTeleport()
 end
 
 local function sendToServer()
-    while teleportEnabled do -- Exécuter seulement si la téléportation est activée
+    while true do
         wait()
-        local dummy2 = workspace.MAP:FindFirstChild("5k_dummies").Dummy2
-        if dummy2 then
-            local args = {
-                [1] = dummy2.Humanoid,
-                [2] = 1
-            }
-            game:GetService("ReplicatedStorage").jdskhfsIIIllliiIIIdchgdIiIIIlIlIli:FireServer(unpack(args))
-        else
-            print("Le Dummy2 n'existe pas.")
+        if teleportEnabled then -- Exécuter seulement si la téléportation est activée
+            local dummy2 = workspace.MAP:FindFirstChild("5k_dummies").Dummy2
+            if dummy2 then
+                local args = {
+                    [1] = dummy2.Humanoid,
+                    [2] = 1
+                }
+                game:GetService("ReplicatedStorage").jdskhfsIIIllliiIIIdchgdIiIIIlIlIli:FireServer(unpack(args))
+            else
+                print("Le Dummy2 n'existe pas.")
+            end
         end
     end
 end
