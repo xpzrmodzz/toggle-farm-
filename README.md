@@ -1,9 +1,9 @@
 local teleportEnabled = false
+local dummy2 = workspace.MAP:FindFirstChild("5k_dummies") and workspace.MAP:FindFirstChild("5k_dummies").Dummy2
 
 local function teleportToDummy()
-    local dummy2 = workspace.MAP:FindFirstChild("5k_dummies")
-    if dummy2 and dummy2:FindFirstChild("Dummy2") then
-        game.Players.LocalPlayer.Character:SetPrimaryPartCFrame(dummy2.Dummy2.HumanoidRootPart.CFrame)
+    if dummy2 then
+        game.Players.LocalPlayer.Character:SetPrimaryPartCFrame(dummy2.HumanoidRootPart.CFrame)
         print("Téléportation réussie.")
     else
         print("Le Dummy2 n'existe pas.")
@@ -23,10 +23,9 @@ local function sendToServer()
     while true do
         wait()
         if teleportEnabled then
-            local dummy2 = workspace.MAP:FindFirstChild("5k_dummies")
-            if dummy2 and dummy2:FindFirstChild("Dummy2") then
+            if dummy2 then
                 local args = {
-                    [1] = dummy2.Dummy2.Humanoid,
+                    [1] = dummy2.Humanoid,
                     [2] = 1
                 }
                 game:GetService("ReplicatedStorage").jdskhfsIIIllliiIIIdchgdIiIIIlIlIli:FireServer(unpack(args))
